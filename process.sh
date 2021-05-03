@@ -18,9 +18,9 @@ MAKE_PATH=sensor-build
 ELF2DFU=elf2dfu/elf2dfu
 DFU_UTIL=dfu-util
 CALIB_SCRIPT=calibration/calibration.py
-PLOT=1 #  plot
+PLOT=1 #  plot level
 
-SENSOR_DATA=data
+SENSOR_DATA=data2
 
 PYTHON=python3.9
 

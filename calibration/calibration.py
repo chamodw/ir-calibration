@@ -11,61 +11,80 @@ footer = "#endif\n"
 
 all_data = []
 
+K = 1 # Constant for outlier removal
+
 plot = int(sys.argv[3])
 
-original_x = []
-original_y = []
+
+# Opens the data files and goes through each line
+# Each file contains multiple sessions, each session has multiple lines with same temperature reading
+# This loop first identifies the sensor type (Original or already calibrated), and then reads the temperature and ADC
+# And then it rearranges in to the following structure
+# [
+# [ temp_0, [adc0, adc1, adc2, ..., adcn]], 
+# [ temp_1, [adc0, adc1, adc2, ..., adcn]]
+# ]
+
 
 with open(sys.argv[1]) as csv_file:
 	readCSV = csv.reader(csv_file, delimiter = ',')
 	for row in readCSV:
-		print (row)
+		# Identify sensor type
 		if (len(row) < 15):
 			continue
 		if (int(row[2]) == 265):
 			ADC_ROW = 5; # Already calibrated sensor has ADC data on packet[1]
 		else:
 			ADC_ROW = 6; # Original sensor (type 2) has ADC data on packet[2]
-		if (len(row) < 15):
-			continue
-		tmp = float(row[0])
-		adc = int(row[ADC_ROW])
-		original_x.append(adc);
-		original_y.append(tmp);
-		if (len(all_data) == 0 or all_data[-1][0] != tmp):
+		tmp = float(row[0]) # User input temperature reading 
+		adc = int(row[ADC_ROW]) #ADC Reading
+		if (len(all_data) == 0 or all_data[-1][0] != tmp): #Cluster data into same temperature groups
 			all_data.append([tmp, [adc]])
 		else:
 			all_data[-1][1].append(adc)
 
 
-
+# Remove outliers
 for i in range(len(all_data)):
-	fig, ax = plt.subplots()
-	if (len(all_data[i][1])):
-		avg = int(sum(all_data[i][1])/len(all_data[i][1]))
-		diff_array = [(avg-x)**2 for x in all_data[i][1]]
-		stdev = np.sqrt(sum(diff_array)/len(all_data[i][1]))
 
-		new_sum = []
+	if (plot > 1):
+		fig, ax = plt.subplots()
 
-		for j in range(len(all_data[i][1])):
-			if abs(all_data[i][1][j] - avg) < stdev:
-				new_sum.append(all_data[i][1][j])
-		ax.scatter(all_data[i][1], [all_data[i][0] for k in range(len(all_data[i][1]))], label = 'original' + str(i))
-		ax.scatter(new_sum,  [all_data[i][0] for k in range(len(new_sum))], label ='processed' + str(i))
+	adc_readings = all_data[i][1]
+	temp = all_data[i][0] 
+	len_adc = len(adc_readings)
+
+	if (len_adc):
+		avg = int(sum(adc_readings)/len_adc)
+		diff_array = [(avg-x)**2 for x in adc_readings] # (x^2 - mean) array for calculationg standard deviation
+		stdev = np.sqrt(sum(diff_array)/len_adc)
+
+		
+
+		adc_good = []
+		# Pick values that are within += K*stdev of mean and add to a new array
+
+	
+		for j in range(len_adc):
+			if abs(adc_readings[j] - avg) < K*stdev: #Within accepted range
+				adc_good.append(adc_readings[j])
+
+		if (plot > 1):
+			ax.scatter(adc_readings, [ temp for k in range (len_adc)], label = 'original' + str(i), marker = '+')
+			ax.scatter(adc_good,  [temp for k in range(len(adc_good))], label ='processed' + str(i), marker = 'x')
 	
 #		print("stdev", stdev)
-		if (len(new_sum)):
-			all_data[i][1] = int(sum(new_sum)/len(new_sum))
+		if (len(adc_good)):
+			all_data[i][1] = int(sum(adc_good)/len(adc_good))
 		else:
-			aLL_data[i][1] = 0
+			all_data[i][1] = 0
 
 				
 		print ("avg_original ", avg, "new avg ", all_data[i][1])
 
-
-#	ax.legend()
-#	plt.show()
+	if (plot > 1):
+		ax.legend()
+		plt.show()
 
 x_values = [all_data[i][1] for i in range(len(all_data))]
 y_values = [all_data[i][0] for i in range(len(all_data))]
@@ -89,7 +108,6 @@ xcurve = range(min(x_values), max(x_values))
 ycurve = [objective(i, a, b, c) for i in xcurve]
 
 if (plot):
-	plt.scatter(original_x, original_y, marker = '.', )
 	plt.scatter(xcurve, ycurve)
 	plt.scatter(x_values, y_values);
 	plt.show()
