@@ -45,8 +45,6 @@ echo "Sensor found with serial number $ID"
 PORT=$(ls /dev | grep cu.usbmodem)
 PORT=/dev/$PORT
 
-#Create a unique folder for data collection 
-mkdir $SENSOR_DATA/$ID
 
 
 unbuffer hexdump -v -e ' "" 5/2 "%4u " 3/4 " %4f " 2/2  "%4u "  "\n"'  $PORT  | awk '{print $4/100 " " $5*$5*$6/100000 + $5*$7 + $8 " " $5}'
