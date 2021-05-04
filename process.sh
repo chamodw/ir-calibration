@@ -18,9 +18,9 @@ MAKE_PATH=sensor-build
 ELF2DFU=elf2dfu/elf2dfu
 DFU_UTIL=dfu-util
 CALIB_SCRIPT=calibration/calibration.py
-PLOT=1 #  plot level
+PLOT=2 #  plot level
 
-SENSOR_DATA=data2
+SENSOR_DATA=data_tue
 
 PYTHON=python3.9
 
@@ -63,7 +63,8 @@ $PYTHON $CALIB_SCRIPT $(pwd)/$SENSOR_DATA/$ID/data.txt $(pwd)/$SRC_PATH/ir_const
 # Rebuilding firmware
 #--------------------------------------------------------------
 
-( cd $MAKE_PATH && make clean )
+rm $MAKE_PATH/sensor.o
+rm $MAKE_PATH/Sensor_D11.*
 ( cd $MAKE_PATH && make all )
 
 # Generate the DFU File
