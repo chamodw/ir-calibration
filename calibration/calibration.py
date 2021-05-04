@@ -11,7 +11,7 @@ footer = "#endif\n"
 
 all_data = []
 
-K = 1 # Constant for outlier removal
+K = 0.75 # Constant for outlier removal
 
 plot = int(sys.argv[3])
 
@@ -45,6 +45,7 @@ with open(sys.argv[1]) as csv_file:
 
 
 # Remove outliers
+print ("\t Old \t\t New");
 for i in range(len(all_data)):
 
 	if (plot > 1):
@@ -59,7 +60,7 @@ for i in range(len(all_data)):
 		diff_array = [(avg-x)**2 for x in adc_readings] # (x^2 - mean) array for calculationg standard deviation
 		stdev = np.sqrt(sum(diff_array)/len_adc)
 
-		
+
 
 		adc_good = []
 		# Pick values that are within += K*stdev of mean and add to a new array
@@ -72,6 +73,8 @@ for i in range(len(all_data)):
 		if (plot > 1):
 			ax.scatter(adc_readings, [ temp for k in range (len_adc)], label = 'original' + str(i), marker = '+')
 			ax.scatter(adc_good,  [temp for k in range(len(adc_good))], label ='processed' + str(i), marker = 'x')
+
+		
 	
 #		print("stdev", stdev)
 		if (len(adc_good)):
@@ -80,7 +83,10 @@ for i in range(len(all_data)):
 			all_data[i][1] = 0
 
 				
-		print ("avg_original ", avg, "new avg ", all_data[i][1])
+		new_stdev = np.std(adc_good);
+		print ("\t ", avg, " \t\t ", all_data[i][1])
+		print ("\t ", round(stdev, 2), " \t\t ", round(new_stdev,2));
+
 
 	if (plot > 1):
 		ax.legend()
