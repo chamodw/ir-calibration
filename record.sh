@@ -19,9 +19,14 @@ ELF2DFU=elf2dfu/elf2dfu
 DFU_UTIL=dfu-util
 CALIB_SCRIPT=calibration/calibration.py
 
-SENSOR_DATA=data2
+SENSOR_DATA=data_tue
 
 PYTHON=python3.9
+
+echo "--------------------------------"
+echo Please enter temperature reading 1
+
+read TEMP1
 
 
 
@@ -52,11 +57,6 @@ mkdir $SENSOR_DATA/$ID
 # ----------------------------------------------------------------
 # Data collection for temperature point 1
 #-----------------------------------------------------------------
-
-echo "--------------------------------"
-echo Please enter temperature reading 1
-
-read TEMP1
 
 timeout $TIMEOUT  unbuffer hexdump -v -e " \"$TEMP1, \" 13/2 \"%6u, \"  \"\n\" " $PORT  >> $SENSOR_DATA/$ID/data.txt
 
