@@ -87,6 +87,12 @@ for i in range(len(all_data)):
 		print ("\t ", avg, " \t\t ", all_data[i][1])
 		print ("\t ", round(stdev, 2), " \t\t ", round(new_stdev,2));
 
+		if (new_stdev >= 30):
+			print ("***Error too high! ***");
+			print ("***Press enter to continue ***");
+			inp = input();
+
+
 
 	if (plot > 1):
 		ax.legend()
