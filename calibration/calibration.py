@@ -13,7 +13,7 @@ all_data = []
 
 K = 0.75 # Constant for outlier removal
 
-plot = int(sys.argv[3])
+plot = int(sys.argv[2])
 
 
 # Opens the data files and goes through each line
@@ -84,19 +84,32 @@ for i in range(len(all_data)):
 
 				
 		new_stdev = np.std(adc_good);
-		print (all_data[i][0], "\t ", avg, " \t\t ", all_data[i][1])
-		print (all_data[i][0], "\t ", round(stdev, 2), " \t\t ", round(new_stdev,2));
+		print (all_data[i][0], "\t ", avg, " \t ", all_data[i][1])
+		print (all_data[i][0], "\t ", round(stdev, 2), " \t ", round(new_stdev,2));
+		print ('-'*40);
 
 		if (new_stdev >= 40):
-			print ("***Error too high! ***");
-			print ("***Press enter to continue ***");
+			print ("\033[0;31m ***Error too high! ***"); #print error in red
+			print ("*** Continue programming the sensor? (y/n) ***");
 			inp = input();
+			if (inp != 'y'):
+				exit(1)
 
 
 
 	if (plot > 1):
 		ax.legend()
 		plt.show()
+
+
+if (len(all_data) < 3):
+		print ("\033[0;31m ***Error: Not enough datapoints ***"); #print error in red
+		print ("*** Continue programming the sensor? (y/n) ***");
+		inp = input();
+		print (inp)
+		if (inp != 'y'):
+			exit(1)
+
 
 x_values = [all_data[i][1] for i in range(len(all_data))]
 y_values = [all_data[i][0] for i in range(len(all_data))]
@@ -124,7 +137,9 @@ if (plot):
 	plt.scatter(x_values, y_values);
 	plt.show()
 
-outfile = open(sys.argv[2], 'w')
+if (len(sys.argv) < 4):
+	exit()
+outfile = open(sys.argv[3], 'w')
 
 outfile.write(header);
 outfile.write("#define IR_CALIB_A " + str(a*100000) + "\n");
