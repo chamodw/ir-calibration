@@ -84,8 +84,8 @@ for i in range(len(all_data)):
 
 				
 		new_stdev = np.std(adc_good);
-		print ("\t ", avg, " \t\t ", all_data[i][1])
-		print ("\t ", round(stdev, 2), " \t\t ", round(new_stdev,2));
+		print (all_data[i][0], "\t ", avg, " \t\t ", all_data[i][1])
+		print (all_data[i][0], "\t ", round(stdev, 2), " \t\t ", round(new_stdev,2));
 
 		if (new_stdev >= 40):
 			print ("***Error too high! ***");
