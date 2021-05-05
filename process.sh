@@ -18,7 +18,7 @@ MAKE_PATH=sensor-build
 ELF2DFU=elf2dfu/elf2dfu
 DFU_UTIL=dfu-util
 CALIB_SCRIPT=calibration/calibration.py
-PLOT=2 #  plot level
+PLOT=0 #  plot level
 
 SENSOR_DATA=data_tue
 
@@ -55,9 +55,13 @@ mkdir $SENSOR_DATA/$ID
 # Invoking Python script for calibration
 #---------------------------------------------------------------
 
-$PYTHON $CALIB_SCRIPT $(pwd)/$SENSOR_DATA/$ID/data.txt $(pwd)/$SRC_PATH/ir_constants.h $PLOT
+$PYTHON $CALIB_SCRIPT $(pwd)/$SENSOR_DATA/$ID/data.txt $PLOT $(pwd)/$SRC_PATH/ir_constants.h 
 
-
+RET=$?
+if [ $RET -ne 0 ]; then
+	echo "Calibration failed"
+	exit
+fi
 
 #--------------------------------------------------------------
 # Rebuilding firmware

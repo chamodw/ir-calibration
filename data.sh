@@ -1,13 +1,10 @@
 #!/bin/zsh
 
-
+clear
 #	
 #	Chamod Weerasinghe
-#	Calibration scirpt version 2
-#	1. Script looks for USB devices and identifies temperature sensor is connected
-#	2. Creates a folder with the serial number of the sensor
-#	3. Takes readings from the sensor in 3 stages for 3 different temperatures
-#	
+#	Data inspection script
+#	Calculates standard deviation and highlights errors
 #	
 
 
@@ -46,13 +43,13 @@ PORT=$(ls /dev | grep cu.usbmodem)
 PORT=/dev/$PORT
 
 
-
-
+# Look for data in  different folders
+ls data_tue/$ID
+ls wed_data/$ID
 
 #---------------------------------------------------------------
 # Invoking Python script for calibration
 #---------------------------------------------------------------
 
-$PYTHON $CALIB_SCRIPT $(pwd)/$SENSOR_DATA/$ID/data.txt $(pwd)/$SRC_PATH/ir_constants.h $PLOT
-
+$PYTHON $CALIB_SCRIPT $(pwd)/$SENSOR_DATA/$ID/data.txt $PLOT 
 
