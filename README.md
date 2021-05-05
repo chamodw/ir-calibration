@@ -23,3 +23,12 @@ And associated libraries
 
 # Install unbuffer
 `brew install unbuffer`
+
+
+# Clone this repo
+`git clone https://github.com/chamodw/ir-calibration`
+`cd ir-calibration'
+`mv atmel sensor-build`
+`git clone https://github.com/ARM-software/CMSIS`
+`git clone https://github.com/augmented-human-lab/kiwrious-sensor'
+'cd ..'
