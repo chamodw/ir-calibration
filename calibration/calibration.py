@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 header="// Auto generated file \n #ifndef IR_CONSTANTS\n #define IR_CONSTANTS\n\n"
 footer = "#endif\n"
 
+stdev_limits=[8,8,30]
+
 all_data = []
 
 K = 0.75 # Constant for outlier removal
@@ -71,7 +73,7 @@ for i in range(len(all_data)):
 				adc_good.append(adc_readings[j])
 
 		if (plot > 1):
-			ax.scatter(adc_readings, [ temp for k in range (len_adc)], label = 'original' + str(i), marker = '+')
+			ax.plot(adc_readings, [ temp for k in range (len_adc)], label = 'original' + str(i), marker = '+')
 			ax.scatter(adc_good,  [temp for k in range(len(adc_good))], label ='processed' + str(i), marker = 'x')
 
 		
@@ -87,20 +89,34 @@ for i in range(len(all_data)):
 		print (all_data[i][0], "\t ", avg, " \t ", all_data[i][1])
 		print (all_data[i][0], "\t ", round(stdev, 2), " \t ", round(new_stdev,2));
 		print ('-'*40);
+	
 
-		if (new_stdev >= 40):
+		stdev_limit=8
+		if (temp < 10):
+			stdev_limit=stdev_limits[0]
+		elif (temp < 40):
+			stdev_limit=stdev_limits[1]
+		else	:
+			stdev_limit=stdev_limits[2]
+	
+		ex = 0
+		if (new_stdev >= stdev_limit):
 			print ("\033[0;31m ***Error too high! ***"); #print error in red
 			print ("*** Continue programming the sensor? (y/n) ***");
-			inp = input();
-			if (inp != 'y'):
-				exit(1)
+			#inp = input();
+			#if (inp != 'y'):
+#			exit(1)
+			ex = 1
 
 
 
 	if (plot > 1):
 		ax.legend()
 		plt.show()
-
+	if (ex):
+		exit(1)
+if (len(sys.argv) < 4):
+	exit()
 
 if (len(all_data) < 3):
 		print ("\033[0;31m ***Error: Not enough datapoints ***"); #print error in red

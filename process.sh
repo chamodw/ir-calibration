@@ -20,7 +20,7 @@ DFU_UTIL=dfu-util
 CALIB_SCRIPT=calibration/calibration.py
 PLOT=0 #  plot level
 
-SENSOR_DATA=data_tue
+SENSOR_DATA=wed_data
 
 PYTHON=python3.9
 
@@ -41,6 +41,17 @@ echo "--------------------------------"
 echo "Sensor found with serial number $ID"
 
 
+# Look for all possible folders for this sensor
+A=$(ls wed_data | grep $ID)
+B=$(ls fri_data | grep $ID)
+
+if [[ ! -z $A ]] ; then
+	SENSOR_DATA=wed_data
+	echo "Wednesday"
+else
+	SENSOR_DATA=fri_Data
+	echo "Friday"
+fi
 
 PORT=$(ls /dev | grep cu.usbmodem)
 PORT=/dev/$PORT
@@ -73,9 +84,9 @@ rm $MAKE_PATH/Sensor_D11.*
 
 # Generate the DFU File
 
-$ELF2DFU $(PWD)/$MAKE_PATH/Sensor_D11.elf $(PWD)/$SENSOR_DATA/$ID/out.dfu
+$ELF2DFU $(PWD)/$MAKE_PATH/Sensor_D11.elf $(PWD)/$SENSOR_DATA/$ID/$ID.dfu
 
 # Flash the DFU file
 echo "Flashing the new firmware. Please do not disconnect the sensor"
 
-$DFU_UTIL -D $SENSOR_DATA/$ID/out.dfu
+$DFU_UTIL -D $SENSOR_DATA/$ID/$ID.dfu

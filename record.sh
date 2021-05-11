@@ -18,8 +18,9 @@ MAKE_PATH=sensor-build
 ELF2DFU=elf2dfu/elf2dfu
 DFU_UTIL=dfu-util
 CALIB_SCRIPT=calibration/calibration.py
+PLOT=0
 
-SENSOR_DATA=wed_data
+SENSOR_DATA=fri_data
 
 PYTHON=python3.9
 
@@ -43,6 +44,20 @@ echo "--------------------------------"
 echo "Sensor found with serial number $ID"
 
 
+# Look for all possible folders for this sensor
+A=$(ls wed_data | grep $ID)
+B=$(ls fri_data | grep $ID)
+
+if [[ ! -z $A ]] ; then
+	SENSOR_DATA=wed_data
+	echo "Wednesday"
+else
+	SENSOR_DATA=fri_Data
+	echo "Friday"
+fi
+
+
+
 
 PORT=$(ls /dev | grep cu.usbmodem)
 PORT=/dev/$PORT
@@ -56,7 +71,7 @@ mkdir $SENSOR_DATA/$ID
 # Data collection for temperature point 1
 #-----------------------------------------------------------------
 
-timeout $TIMEOUT  unbuffer hexdump -v -e " \"$TEMP1, \" 13/2 \"%6u, \"  \"\n\" " $PORT  >> $SENSOR_DATA/$ID/data.txt
+timeout $TIMEOUT  unbuffer hexdump -v -e " \"$TEMP1, \" 13/2 \"%6u, \"  \"\n\" " $PORT  >> $SENSOR_DATA/$ID/$TEMP1.txt
 
 
 
@@ -64,7 +79,15 @@ timeout $TIMEOUT  unbuffer hexdump -v -e " \"$TEMP1, \" 13/2 \"%6u, \"  \"\n\" "
 # Invoking Python script for calibration
 #---------------------------------------------------------------
 
-$PYTHON dev.py $(pwd)/$SENSOR_DATA/$ID/data.txt
+$PYTHON $CALIB_SCRIPT $(pwd)/$SENSOR_DATA/$ID/$TEMP1.txt $PLOT 
+
+RET=$?
+if [ $RET -ne 0 ] ; then
+	rm $(pwd)/$SENSOR_DATA/$ID/$TEMP1.txt
+	exit 1
+fi
+echo "\033[0;32m Good! ---------------------------"
+cat $SENSOR_DATA/$ID/$TEMP1.txt >> $SENSOR_DATA/$ID/data.txt
 
 exit 0
 
