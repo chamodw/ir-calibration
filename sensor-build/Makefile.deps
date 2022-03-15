@@ -1,0 +1,61 @@
+sns_dd_pah_comm_i2c.o: kiwrious-sensor/src/PPG/sns_dd_pah_comm_i2c.c \
+ kiwrious-sensor/src/PPG/sns_dd_pah_comm.h \
+ kiwrious-sensor/src/PPG/sns_dd_pah_platform_types.h \
+ kiwrious-sensor/src/PPG/sns_dd_pah_platform_functions.h \
+ kiwrious-sensor/src/PPG/sns_dd_pah_system_clock.h \
+ kiwrious-sensor/src/PPG/sns_dd_pah_debug_log.h
+printf.o: kiwrious-sensor/src/Segger/printf.c \
+ kiwrious-sensor/src/Segger/printf.h
+SEGGER_RTT.o: kiwrious-sensor/src/Segger/SEGGER_RTT.c \
+ kiwrious-sensor/src/Segger/SEGGER_RTT.h \
+ kiwrious-sensor/src/Segger/SEGGER_RTT_Conf.h
+SEGGER_RTT_Syscalls_GCC.o: \
+ kiwrious-sensor/src/Segger/SEGGER_RTT_Syscalls_GCC.c \
+ kiwrious-sensor/src/Segger/SEGGER_RTT.h \
+ kiwrious-sensor/src/Segger/SEGGER_RTT_Conf.h
+sensirion_common.o: kiwrious-sensor/src/Sensirion/sensirion_common.c \
+ kiwrious-sensor/src/Sensirion/sensirion_common.h \
+ kiwrious-sensor/src/Sensirion/sensirion_arch_config.h \
+ kiwrious-sensor/src/Sensirion/sensirion_i2c.h
+sensirion_humidity_conversion.o: \
+ kiwrious-sensor/src/Sensirion/sensirion_humidity_conversion.c \
+ kiwrious-sensor/src/Sensirion/sensirion_humidity_conversion.h \
+ kiwrious-sensor/src/Sensirion/sensirion_arch_config.h
+sensirion_temperature_unit_conversion.o: \
+ kiwrious-sensor/src/Sensirion/sensirion_temperature_unit_conversion.c \
+ kiwrious-sensor/src/Sensirion/sensirion_temperature_unit_conversion.h \
+ kiwrious-sensor/src/Sensirion/sensirion_arch_config.h
+sgp30.o: kiwrious-sensor/src/Sensirion/sgp30.c \
+ kiwrious-sensor/src/Sensirion/sgp30.h \
+ kiwrious-sensor/src/Sensirion/sensirion_arch_config.h \
+ kiwrious-sensor/src/Sensirion/sensirion_common.h \
+ kiwrious-sensor/src/Sensirion/sensirion_i2c.h \
+ kiwrious-sensor/src/Sensirion/sgp_git_version.h
+sgpc3.o: kiwrious-sensor/src/Sensirion/sgpc3.c \
+ kiwrious-sensor/src/Sensirion/sgpc3.h \
+ kiwrious-sensor/src/Sensirion/sensirion_arch_config.h \
+ kiwrious-sensor/src/Sensirion/sensirion_common.h \
+ kiwrious-sensor/src/Sensirion/sensirion_i2c.h \
+ kiwrious-sensor/src/Sensirion/sgp_git_version.h
+sgpc3_with_shtc1.o: kiwrious-sensor/src/Sensirion/sgpc3_with_shtc1.c \
+ kiwrious-sensor/src/Sensirion/sensirion_common.h \
+ kiwrious-sensor/src/Sensirion/sensirion_arch_config.h \
+ kiwrious-sensor/src/Sensirion/sensirion_humidity_conversion.h \
+ kiwrious-sensor/src/Sensirion/sgp_git_version.h \
+ kiwrious-sensor/src/Sensirion/sgpc3.h \
+ kiwrious-sensor/src/Sensirion/sensirion_i2c.h \
+ kiwrious-sensor/src/Sensirion/shtc1.h \
+ kiwrious-sensor/src/Sensirion/sht_git_version.h
+sht3x.o: kiwrious-sensor/src/Sensirion/sht3x.c \
+ kiwrious-sensor/src/Sensirion/sht3x.h \
+ kiwrious-sensor/src/Sensirion/sensirion_arch_config.h \
+ kiwrious-sensor/src/Sensirion/sensirion_i2c.h \
+ kiwrious-sensor/src/Sensirion/sht_git_version.h \
+ kiwrious-sensor/src/Sensirion/sensirion_common.h
+shtc1.o: kiwrious-sensor/src/Sensirion/shtc1.c \
+ kiwrious-sensor/src/Sensirion/shtc1.h \
+ kiwrious-sensor/src/Sensirion/sensirion_arch_config.h \
+ kiwrious-sensor/src/Sensirion/sensirion_i2c.h \
+ kiwrious-sensor/src/Sensirion/sht_git_version.h \
+ kiwrious-sensor/src/Sensirion/sensirion_common.h
+syscalls.o: kiwrious-sensor/src/syscalls.c

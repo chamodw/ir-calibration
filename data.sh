@@ -17,7 +17,7 @@ DFU_UTIL=dfu-util
 CALIB_SCRIPT=calibration/calibration.py
 PLOT=0 #  plot level
 
-SENSOR_DATA=data_tue
+SENSOR_DATA=fri_data
 
 PYTHON=python3.9
 
@@ -38,6 +38,20 @@ echo "--------------------------------"
 echo "Sensor found with serial number $ID"
 
 
+# Look for all possible folders for this sensor
+A=$(ls wed_data | grep $ID)
+B=$(ls fri_data | grep $ID)
+
+if [[ ! -z $A ]] ; then
+	SENSOR_DATA=wed_data
+	echo "Wednesday"
+else
+	SENSOR_DATA=fri_Data
+	echo "Friday"
+fi
+
+
+
 
 PORT=$(ls /dev | grep cu.usbmodem)
 PORT=/dev/$PORT
@@ -46,10 +60,12 @@ PORT=/dev/$PORT
 # Look for data in  different folders
 ls data_tue/$ID
 ls wed_data/$ID
+ls fri_data/$ID
 
 #---------------------------------------------------------------
 # Invoking Python script for calibration
 #---------------------------------------------------------------
 
 $PYTHON $CALIB_SCRIPT $(pwd)/$SENSOR_DATA/$ID/data.txt $PLOT 
+
 
