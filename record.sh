@@ -28,6 +28,11 @@ echo "--------------------------------"
 
 TEMP1=$1
 echo $TEMP1
+if [ -z "$TEMP1" ] ; then
+	echo "Usage ./record.sh temprature (./record.sh 25)"
+	exit
+fi
+
 
 #Extract serial number using the support script
 ID=$(util/serial.sh)
@@ -96,18 +101,3 @@ cat $SENSOR_DATA/$ID/$TEMP1.txt >> $SENSOR_DATA/$ID/data.txt
 
 exit 0
 
-#--------------------------------------------------------------
-# Rebuilding firmware
-#--------------------------------------------------------------
-
-( cd $MAKE_PATH && make clean )
-( cd $MAKE_PATH && make all )
-
-# Generate the DFU File
-
-$ELF2DFU $(PWD)/$MAKE_PATH/Sensor_D11.elf $(PWD)/$SENSOR_DATA/$ID/out.dfu
-
-# Flash the DFU file
-echo "Flashing the new firmware. Please do not disconnect the sensor"
-
-$DFU_UTIL -D $SENSOR_DATA/$ID/out.dfu
