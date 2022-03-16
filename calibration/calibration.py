@@ -47,7 +47,7 @@ with open(sys.argv[1]) as csv_file:
 
 
 # Remove outliers
-print ("\t Old \t\t New");
+print ("\t\tRaw\t Filtered");
 for i in range(len(all_data)):
 
 	if (plot > 1):
@@ -86,8 +86,8 @@ for i in range(len(all_data)):
 
 				
 		new_stdev = np.std(adc_good);
-		print (all_data[i][0], "\t ", avg, " \t ", all_data[i][1])
-		print (all_data[i][0], "\t ", round(stdev, 2), " \t ", round(new_stdev,2));
+		print (all_data[i][0], "\tmean\t", avg, " \t ", all_data[i][1])
+		print (all_data[i][0], "\tstdev\t", round(stdev, 2), " \t ", round(new_stdev,2));
 		print ('-'*40);
 	
 

@@ -20,7 +20,7 @@ DFU_UTIL=dfu-util
 CALIB_SCRIPT=calibration/calibration.py
 PLOT=1 #  plot
 
-SENSOR_DATA=data
+SENSOR_DATA=session2_thu
 
 PYTHON=python3.9
 

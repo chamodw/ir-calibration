@@ -20,7 +20,7 @@ DFU_UTIL=dfu-util
 CALIB_SCRIPT=calibration/calibration.py
 PLOT=0
 
-SENSOR_DATA=fri_data
+SENSOR_DATA=session2_thu
 
 PYTHON=python3.9
 
@@ -45,15 +45,15 @@ echo "Sensor found with serial number $ID"
 
 
 # Look for all possible folders for this sensor
-A=$(ls wed_data | grep $ID)
-B=$(ls fri_data | grep $ID)
+A=$(ls session2_thu | grep $ID)
+#B=$(ls fri_data | grep $ID)
 
 if [[ ! -z $A ]] ; then
-	SENSOR_DATA=wed_data
-	echo "Wednesday"
-else
-	SENSOR_DATA=fri_Data
-	echo "Friday"
+	SENSOR_DATA=session2_thu
+	echo "Session 2 Thursday"
+#else
+#	SENSOR_DATA=fri_Data
+#	echo "Friday"
 fi
 
 
@@ -81,11 +81,17 @@ timeout $TIMEOUT  unbuffer hexdump -v -e " \"$TEMP1, \" 13/2 \"%6u, \"  \"\n\" "
 
 $PYTHON $CALIB_SCRIPT $(pwd)/$SENSOR_DATA/$ID/$TEMP1.txt $PLOT 
 
+#If python script returns error, delete the data collected in
+#this invocation
 RET=$?
 if [ $RET -ne 0 ] ; then
 	rm $(pwd)/$SENSOR_DATA/$ID/$TEMP1.txt
 	exit 1
 fi
+
+#If python script returns success, append this data to the 
+#sensor data file
+
 echo "\033[0;32m Good! ---------------------------"
 cat $SENSOR_DATA/$ID/$TEMP1.txt >> $SENSOR_DATA/$ID/data.txt
 
