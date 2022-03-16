@@ -26,8 +26,8 @@ PYTHON=python3.9
 
 
 
-#Extract serial number from the lsusb output
-ID=$(lsusb 2> /dev/null | grep "Kiwrious Temperature" | awk '{print $NF}' )
+#Extract serial number using the support script
+ID=$(util/serial.sh)
 
 
 # If serial number is empty, no sensor is connected
