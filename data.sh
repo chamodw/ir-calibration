@@ -19,7 +19,7 @@ PLOT=0 #  plot level
 
 SENSOR_DATA=session2_thu
 
-PYTHON=python3.9
+PYTHON=python3
 
 
 
@@ -43,7 +43,7 @@ A=$(ls session2_thu | grep $ID)
 #B=$(ls fri_data | grep $ID)
 
 if [[ ! -z $A ]] ; then
-	SENSOR_DATA=wed_data
+	SENSOR_DATA=session2_thu
 	echo "Session2 Thursday"
 #else
 #	SENSOR_DATA=fri_Data
@@ -52,15 +52,8 @@ fi
 
 
 
-
-PORT=$(ls /dev | grep cu.usbmodem)
-PORT=/dev/$PORT
-
-
 # Look for data in  different folders
-ls data_tue/$ID
-ls wed_data/$ID
-ls fri_data/$ID
+ls session2_thu/$ID
 
 #---------------------------------------------------------------
 # Invoking Python script for calibration

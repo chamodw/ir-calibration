@@ -22,7 +22,7 @@ PLOT=0
 
 SENSOR_DATA=session2_thu
 
-PYTHON=python3.9
+PYTHON=python3
 
 echo "--------------------------------"
 
@@ -59,8 +59,7 @@ fi
 
 
 
-PORT=$(ls /dev | grep cu.usbmodem)
-PORT=/dev/$PORT
+PORT=$(util/port.sh)
 
 #Create a unique folder for data collection 
 mkdir $SENSOR_DATA/$ID

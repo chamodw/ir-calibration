@@ -86,8 +86,8 @@ for i in range(len(all_data)):
 
 				
 		new_stdev = np.std(adc_good);
-		print (all_data[i][0], "\tmean\t", avg, " \t ", all_data[i][1])
-		print (all_data[i][0], "\tstdev\t", round(stdev, 2), " \t ", round(new_stdev,2));
+		print (all_data[i][0], "\tmean\t", avg, "\t", all_data[i][1])
+		print (all_data[i][0], "\tstdev\t", round(stdev, 2), "\t", round(new_stdev,2));
 		print ('-'*40);
 	
 

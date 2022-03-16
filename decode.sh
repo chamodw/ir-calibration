@@ -22,7 +22,7 @@ PLOT=1 #  plot
 
 SENSOR_DATA=session2_thu
 
-PYTHON=python3.9
+PYTHON=python3
 
 
 
@@ -42,8 +42,7 @@ echo "Sensor found with serial number $ID"
 
 
 
-PORT=$(ls /dev | grep cu.usbmodem)
-PORT=/dev/$PORT
+PORT=$(util/port.sh)
 
 
 
