@@ -58,7 +58,7 @@ fi
 # Merge all temperature data into a data.csv file
 #---------------------------------------------------------------
 
-cat $SENSOR_DATA/$ID/*.txt >> $SENSOR_DATA/$ID/data.csv
+cat $SENSOR_DATA/$ID/*.txt > $SENSOR_DATA/$ID/data.csv
 
 
 #---------------------------------------------------------------
