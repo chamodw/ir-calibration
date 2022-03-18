@@ -11,14 +11,13 @@
 #	
 
 
-TIMEOUT=5 # Specifies the data collection time for each temperature point
 
 SRC_PATH=sensor-build/kiwrious-sensor/src
 MAKE_PATH=sensor-build
 ELF2DFU=elf2dfu/elf2dfu
 DFU_UTIL=dfu-util
 CALIB_SCRIPT=calibration/calibration.py
-PLOT=0 #  plot level
+PLOT=1 #  plot level
 
 SENSOR_DATA=session2_thu
 
@@ -53,7 +52,6 @@ if [[ ! -z $A ]] ; then
 #	echo "Friday"
 fi
 
-PORT=$(util/port.sh)
 
 
 #---------------------------------------------------------------
