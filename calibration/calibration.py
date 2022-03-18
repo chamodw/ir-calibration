@@ -4,7 +4,7 @@ import scipy
 from scipy.optimize import curve_fit
 from scipy import stats
 import numpy as np
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 header="// Auto generated file \n #ifndef IR_CONSTANTS\n #define IR_CONSTANTS\n\n"
 footer = "#endif\n"
@@ -117,7 +117,6 @@ for i in range(len(all_data)):
 		exit(1)
 if (len(sys.argv) < 4):
 	exit()
-
 if (len(all_data) < 3):
 		print ("\033[0;31m ***Error: Not enough datapoints ***"); #print error in red
 		print ("*** Continue programming the sensor? (y/n) *** \033[0m");
@@ -148,7 +147,7 @@ print(c)
 xcurve = range(min(x_values), max(x_values))
 ycurve = [objective(i, a, b, c) for i in xcurve]
 
-if (plot):
+if (plot> 0):
 	plt.scatter(xcurve, ycurve)
 	plt.scatter(x_values, y_values);
 	plt.show()
