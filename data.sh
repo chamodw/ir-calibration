@@ -52,6 +52,15 @@ fi
 # Look for data in  different folders
 ls session2_thu/$ID
 
+
+#---------------------------------------------------------------
+# Merge all temperature data into a data.csv file
+#---------------------------------------------------------------
+
+cat $SENSOR_DATA/$ID/*.txt > $SENSOR_DATA/$ID/data.csv
+
+
+
 #---------------------------------------------------------------
 # Invoking calibration python script for data inspection
 #---------------------------------------------------------------
