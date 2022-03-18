@@ -55,17 +55,19 @@ fi
 
 PORT=$(util/port.sh)
 
-#Create a unique folder for data collection 
-mkdir $SENSOR_DATA/$ID
 
+#---------------------------------------------------------------
+# Merge all temperature data into a data.csv file
+#---------------------------------------------------------------
 
+cat $SENSOR_DATA/$ID/*.txt >> $SENSOR_DATA/$ID/data.csv
 
 
 #---------------------------------------------------------------
 # Invoking Python script for calibration
 #---------------------------------------------------------------
 
-$PYTHON $CALIB_SCRIPT $(pwd)/$SENSOR_DATA/$ID/data.txt $PLOT $(pwd)/$SRC_PATH/ir_constants.h 
+$PYTHON $CALIB_SCRIPT $(pwd)/$SENSOR_DATA/$ID/data.csv $PLOT $(pwd)/$SRC_PATH/ir_constants.h 
 
 RET=$?
 if [ $RET -ne 0 ]; then
