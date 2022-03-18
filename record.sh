@@ -97,7 +97,8 @@ fi
 #sensor data file
 
 echo "\033[0;32m Good! ---------------------------"
-cat $SENSOR_DATA/$ID/$TEMP1.txt >> $SENSOR_DATA/$ID/data.txt
+# no longer merges to one file, this happens at the processing step
+#cat $SENSOR_DATA/$ID/$TEMP1.txt >> $SENSOR_DATA/$ID/data.txt 
 
 exit 0
 
