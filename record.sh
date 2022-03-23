@@ -96,7 +96,7 @@ fi
 #If python script returns success, append this data to the 
 #sensor data file
 
-echo "\033[0;32m Good! ---------------------------"
+echo "\033[0;32m Good! ---------------------------\033[0m"
 # no longer merges to one file, this happens at the processing step
 #cat $SENSOR_DATA/$ID/$TEMP1.txt >> $SENSOR_DATA/$ID/data.txt 
 
