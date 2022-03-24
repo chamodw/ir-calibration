@@ -2,3 +2,4 @@
 **/.dfu
 *.dfu
 sensor-build/
+*.csv
